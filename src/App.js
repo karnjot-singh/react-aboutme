@@ -12,14 +12,14 @@ function App() {
         <br />
         <Nav variant="tabs" defaultActiveKey="/">
           <Nav.Item>
-            <Nav.Link eventKey="about" style={{color: menuItem=="about"?'#349ceb':'black'}} active={menuItem=="about" ? true : false} onClick={() => setMenuItem("about")}>About me</Nav.Link>
+            <Nav.Link eventKey="about" style={{color: menuItem==="about"?'#349ceb':'black'}} active={menuItem==="about" ? true : false} onClick={() => setMenuItem("about")}>About me</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="town" style={{color: menuItem=="town"?'#349ceb':'black'}} active={menuItem=="town" ? true : false} onClick={() => setMenuItem("town")}>My Town</Nav.Link>
+            <Nav.Link eventKey="town" style={{color: menuItem==="town"?'#349ceb':'black'}} active={menuItem==="town" ? true : false} onClick={() => setMenuItem("town")}>My Town</Nav.Link>
           </Nav.Item>
         </Nav>
         {
-          menuItem=="about" ? <About /> : <Town />
+          menuItem==="about" ? <About /> : <Town />
         }
     </div>
   );

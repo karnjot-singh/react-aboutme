@@ -9,12 +9,26 @@ function Town() {
     const [city, setCity] = useState(5969423)
     const [isCelcius, setCelcius] = useState(true)
 
+    const cities = {
+        5969423: 'Halifax',
+        1273313: 'Dehradun',
+        292223: 'Dubai',
+        6455259: 'Paris',
+        1261481: 'New Delhi',
+        4190598: 'Dallas'
+    }
+
+    var imgSrc = temp==="-" ? "assets/notavailable.png" : 
+                temp<=10 ? "assets/cold.png" :
+                    temp<=20 ? "assets/mild.png" :
+                        "assets/sunny.png"
+
     useEffect(() => {
         fetch(`https://api.openweathermap.org/data/2.5/weather?id=${city}&appid=3eb8900663ea377b4baf633e7d885a34&units=Metric`)
           .then(res => res.json())
           .then(
             (result) => {
-                if(result.cod==200){
+                if(result.cod===200){
                     setTemp(Math.round(result.main.temp))
                 }
                 else 
@@ -53,25 +67,10 @@ function Town() {
             <br />
             <Row>
                 <Col md={1}>
-                    {
-                        temp=='-'
-                        ?
-                            <Image alt="Weather unavailable" src="assets/notavailable.png" fluid/>
-                        :
-                            temp<=10 
-                            ?
-                                <Image alt="Cold" src="assets/cold.png" fluid/>
-                            :
-                                temp<=20
-                                ?
-                                    <Image alt="Mild" src="assets/mild.png" fluid/>
-                                :
-                                    <Image alt="Sunny" src="assets/sunny.png" fluid/>
-                    }
-                    
+                    <Image alt="Weather unavailable" src={imgSrc} fluid/>
                 </Col>
-                <Col xs={6} md={1} style={{textAlign: 'right', verticalAlign: 'middle', fontSize: temp=='-'? '1vw' : '2vw', color:'#349ceb'}}>
-                    {isCelcius ? temp=='-'? 'Not Available' : temp : temp=='-'? 'Not Available' : (((temp*9)/5) + 32) }
+                <Col xs={6} md={1} style={{textAlign: 'right', verticalAlign: 'middle', fontSize: temp==='-'? '1vw' : '2vw', color:'#349ceb'}}>
+                    {isCelcius ? temp==='-'? 'Not Available' : temp : temp==='-'? 'Not Available' : (((temp*9)/5) + 32) }
                 </Col>
                 <Col xs={6} md={1} style={{textAlign: 'left', fontSize: '1.3vw', verticalAlign: 'middle'}}>
                    
@@ -86,21 +85,21 @@ function Town() {
                     </Row>
                 </Col>
                 <Col md={1} style={{textAlign: 'right', fontSize: '1.5vw', verticalAlign: 'middle'}}>
-                    { temp=='-'?undefined:
+                    { temp==='-'?undefined:
                         <Form.Label for="city">City</Form.Label>
                     }
                 </Col>
                 <Col md={2}>
-                    { temp=='-'?undefined:
+                    { temp==='-'?undefined:
                         <Form.Control
                             id="city"
                             as="select"
                             custom
                             onChange={(val) => setCity(val.target.value)}
+                            value={city}
                             >
-                            <option value="5969423">Halifax</option>
-                            <option value="1273313">Dehradun</option>
-                            <option value="292223">Dubai</option>
+                            {Object.entries(cities)
+                            .map( ([key, value]) => <option value={key} >{value}</option> )}
                         </Form.Control>
                     }
                 </Col>
